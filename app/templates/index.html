@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <h1>Hi, {{ current_user.username }}!</h1>
+<a href="{{url_for('upload')}}">Upload files here</a>
+<h2>List of uploaded files</h2>
+<ol>
+        {% for file in files %}
+        {% if expired %}
+        <div><li><a href="{{url_for('not_found')}}">{{ file.filename }}</a> expired {{ file.datetime }}</li></div>
+        {% else %}
+        <div><li><a href="{{url_for('file', filename=file.filename, file_id=file.id)}}">{{ file.filename }}</a> expires {{ file.datetime }} </li></div>
+        {% endif %}
+        {% endfor %}
+</ol>
+{% endblock %}
