@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileRequired, FileAllowed
-from flask_uploads import TEXT, IMAGES
+from flask_wtf.file import FileField
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.fields.html5 import DateTimeField, TimeField, DateField
+from wtforms.fields.html5 import TimeField, DateField
 from wtforms.validators import DataRequired, EqualTo, ValidationError
 from app.models import User
 
@@ -31,6 +30,4 @@ class FileUploadForm(FlaskForm):
     file = FileField('filename')
     date = DateField('date')
     time = TimeField('time')
-    #date = DateField('Date', format='%Y-%m-%d')
-    #time = TimeField('Time')
     submit = SubmitField("Upload File")
