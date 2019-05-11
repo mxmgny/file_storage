@@ -3,7 +3,8 @@
 <span><code>{{ title }} </code>
    Time left to live : </span>
 <span id="demo"></span>
-
+<hr>
+<a href="{{ url_for('download', file_id=id) }}">Download file</a>
 <script>
 
 var countDownDate = new Date("{{ datetime }}").getTime();

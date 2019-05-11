@@ -1,9 +1,10 @@
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, FileUploadForm
 from app.models import User, File
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, send_file
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from io import BytesIO
 import datetime
 
 
@@ -88,10 +89,17 @@ def upload():
 def file(filename, file_id):
     if current_user.is_anonymous:
         return redirect(url_for('login'))
-    file = File.query.filter_by(filename=filename, user_id=current_user.id, id=file_id).first()
-    if expired(file.datetime):
+    f = File.query.filter_by(filename=filename, user_id=current_user.id, id=file_id).first()
+    if expired(f.datetime):
         return render_template('404.html', title='404 Not Found')
-    return render_template('file.html', title=file.filename, datetime=file.datetime)
+    return render_template('file.html', title=f.filename, datetime=f.datetime, id=f.id)
+
+
+@app.route('/file/download/<file_id>/')
+@login_required
+def download(file_id):
+    f = File.query.filter_by(id=file_id, user_id=current_user.id).first()
+    return send_file(BytesIO(f.data), attachment_filename=f.filename, as_attachment=True)
 
 
 @app.route('/404')
