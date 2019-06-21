@@ -1,21 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Upload file</h1>
-        <form method="post", action="" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
-                <p>
-                        {{ form.file.label }} <br>
-                        {{ form.file() }}
-                </p>
-                <p>
-                        {{ form.date.label }} <br>
-                        {{ form.date() }}
-                </p>
-                <p>
-                        {{ form.time.label }} <br>
-                        {{ form.time() }}
-                </p>
-                <p>{{ form.submit() }}</p>
-        </form>
-<hr>
+<div class="row justify-content-md-center">
+    <div class="col-4">
+        <h1>Upload file</h1>
+                <form method="post", action="" enctype="multipart/form-data">
+                        {{ form.hidden_tag() }}
+                        <div class="input-group mb-3">
+
+                                <div class="custom-file">
+                                        {{ form.file(class_="custom-file-input") }}
+                                        <label class="custom-file-label" for="file">Choose file</label>
+                                </div>
+                        </div>
+
+                        <div class="form-group">
+                                <label for="date">
+                                        {{ form.date.label }}
+                                </label>
+                                {{ form.date(class_="form-control") }}
+                        </div>
+
+                        <div class="form-group">
+                                <label for="time">
+                                        {{ form.time.label }}
+                                </label>
+                                {{ form.time(class_="form-control") }}
+                        </div>
+                        <p>{{ form.submit(class_="btn btn-primary w-100") }}</p>
+                </form>
+    </div>
+</div>
 {% endblock %}

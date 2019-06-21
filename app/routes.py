@@ -8,6 +8,7 @@ from io import BytesIO
 import datetime
 
 
+#
 @app.route('/')
 @app.route('/index', methods=['GET'])
 @login_required
@@ -23,20 +24,15 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # check if we have user already authentificated
     if current_user.is_authenticated:
         return redirect(url_for('index'))
-    # create form Object
     form = LoginForm()
     if form.validate_on_submit():
-        # look for username in db and get first result
         user = User.query.filter_by(username=form.username.data).first()
-        # if no user found or password mismatch login again
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        # redirect after login to desti
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
@@ -81,6 +77,8 @@ def upload():
         db.session.add(new_file)
         db.session.commit()
         return redirect(url_for('index'))
+    else:
+        flash('This file format is not allowed')
     return render_template('upload.html', title='File upload', form=form)
 
 
@@ -107,6 +105,7 @@ def not_found():
     return render_template('404.html', title='Error 404')
 
 
+
 def datetime_convert(date, time):
     d = str(date.strftime('%Y-%m-%d')).split('-')
     t = str(time).split(':')
@@ -114,6 +113,7 @@ def datetime_convert(date, time):
     for x in range(0, len(array)):
         array[x] = int(array[x])
     return datetime.datetime(*array)
+
 
 
 def expired(expiration_time):

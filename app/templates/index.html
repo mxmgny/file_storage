@@ -1,16 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-        <h1>Hi, {{ current_user.username }}!</h1>
-<a href="{{url_for('upload')}}">Upload files here</a>
-<h2>List of uploaded files</h2>
-<ol>
+<div class="row justify-content-md-center">
+    <div class="col">
+                                <h3 class="">Hi, {{ current_user.username }}!</h3>
+    </div>
+</div>
+<div class="row">
+        <div class="col">
+        <h4>List of uploaded files</h4>
+        <div class="list-group">
         {% for file in files %}
-        {% if expired %}
-        <div><li><a href="{{url_for('not_found')}}">{{ file.filename }}</a> expired {{ file.datetime }}</li></div>
-        {% else %}
-        <div><li><a href="{{url_for('file', filename=file.filename, file_id=file.id)}}">{{ file.filename }}</a> expires {{ file.datetime }} </li></div>
-        {% endif %}
+            {% if expired %}
+                <a class="list-group-item" href="{{url_for('not_found')}}">{{ file.filename}}expired {{file.datetime }}</a>
+            {% else %}
+                <a class="list-group-item" href="{{url_for('file', filename=file.filename, file_id=file.id)}}">{{
+                    file.filename }} expires {{ file.datetime }} </a>
+            {% endif %}
         {% endfor %}
-</ol>
+        </div>
+ </div>
+
+</div>
+<hr>
+<a href="{{url_for('upload')}}" class="btn btn-outline-primary btn-lg btn-block" >Upload files here</a>
+
 {% endblock %}

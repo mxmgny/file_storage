@@ -1,31 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Register</h1>
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.username.label }}<br>
-        {{ form.username(size=32) }}<br>
-        {% for error in form.username.errors %}
-            <span style="color:red;">{{ error }}</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=32) }}<br>
-        {% for error in form.password.errors %}
-            <span style="color:red;">{{ error }}</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.password2.label }}<br>
-        {{ form.password2(size=32) }}<br>
-        {% for error in form.password2.errors %}
-            <span style="color:red;">{{ error }}</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.submit() }}
-    </p>
-</form>
+<div class="row justify-content-md-center">
+<div class="col-4">
+    <h1 class="center">Register</h1>
+    <form action="" method="post" novalidate>
+
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label for="username">
+                {{ form.username.label }}
+            </label>
+            {{ form.username(size=32, class_="form-control")}}
+        </div>
+        {% if form.username.errors %}
+            <div class="alert alert-danger" role="alert">
+                {% for error in form.username.errors %}
+                    <span >[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="password">
+                {{ form.password.label }}
+            </label>
+            {{ form.password(size=32, class_="form-control") }}
+        </div>
+        {% if form.password.errors %}
+            <div class="alert alert-danger">
+            {% for error in form.password.errors %}
+                <span >{{ error }}</span>
+            {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label for="password2">
+                {{ form.password2.label }}
+            </label>
+            {{ form.password2(size=32, class_="form-control") }}
+        </div>
+        {% if form.password2.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.password2.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {{ form.submit(class_="btn btn-primary w-100") }}
+
+    </form>
 {% endblock %}
