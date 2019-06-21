@@ -14,3 +14,7 @@ Maybe in a few hours of exploring documentation and few more commits i'll leave 
 
 If you want run this app on your local machine you should preinstall flask and some more modules. 
 The whole list of required modules contains in the [requirements.txt](/requirements.txt) file. 
+
+You can checkout my **[DEMO](https://flask-file-server.herokuapp.com)**
+
+It might load quite long, but dont worry its just heroku deploying my app=)
